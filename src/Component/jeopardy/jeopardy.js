@@ -8,9 +8,15 @@ class Jeopardy extends Component {
     this.client = new JeopardyService();
     this.state = {
       data: {},
-      score: 0
+      score: 0,
+      formData:{
+      answer:"",
+      
+
+      }
     }
   }
+
   //get a new random question from the API and add it to the data object in state
   getNewQuestion() {
     return this.client.getQuestion().then(result => {
@@ -19,30 +25,93 @@ class Jeopardy extends Component {
       })
     })
   }
+
+  handleChange = (event) => {
+    let formData = this.state.formData;
+    formData[event.target.name] = event.target.value;
+    this.setState({
+      formData})
+  }
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+if (this.state.data.answer === this.state.formData.answer){
+  console.log("Match")
+  this.setState((state, props)=> ({
+    score: state.score + state.data.value,
+    formData: {
+      answer: ""
+    }
+  }))
+}
+else {
+  console.log ("No Match")
+  this.setState((state, props)=> ({
+    score: state.score - state.data.value,
+    formData: {
+      answer: ""
+    }
+  }))
+}
+
+this.getNewQuestion()   
+}
+
   //when the component mounts, get a the first question
   componentDidMount() {
     this.getNewQuestion();
   }
   //display the results on the screen
   render() {
-      console.log(this.state.data)
-      if (this.state.data){
 
-      }
+    console.log (this.state.data)
+    // console.log(this.state)
+    
+    if (!this.state.data.category){
+      return <div> Loading </div>;
+      
+    }
     return (
       <div>
-        Stuff here
-      </div>
-    );
+        <div>
+            <label> Question: </label>
+            <p>{this.state.data.question}</p> 
+        </div>             
+
+        <div>          
+            <label>Value:</label>
+            <p>{this.state.data.value} </p>
+        </div>
+
+        <div>          
+            <label> Category:</label>
+            <p>{this.state.data.category.title} </p>
+        </div>        
+     
+        <div>
+            <label>Score:</label>
+            <p>{this.state.score} </p>
+            
+        </div>
+
+        <div>
+              <form onSubmit={this.handleSubmit}>
+                    <div>
+                        <label htmlFor>Answer:</label>
+                        <input                         
+                            type="text" 
+                            name="answer" 
+                            value= {this.state.formData.answer}
+                            onChange= {this.handleChange}
+                            />
+                        </div>
+                        <button>Submit</button>
+                    
+              </form>
+        </div>
+        </div>    
+      
+      );      
   }
 }
-return (
-    <div> 
-        <h3>loading</h3>
-        <h3>loading</h3>
-        <h3>loading</h3>
-        <h3>loading</h3>
-        <h3>loading</h3>
-    </div>
-)
 export default Jeopardy;

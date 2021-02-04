@@ -6,7 +6,7 @@ import Contact from './Component/Contact/Contact';
 import fourOneFour from './Component/fourOneFour/fourOneFour'
 import Navigation from "./Component/Navigation/Navigation";
 import {Route , Switch} from "react-router-dom";
-// import jeopardy from "./Component/jeopardy/jeopardy"
+import Jeopardy from "./Component/Jeopardy/Jeopardy"
 
 class App extends Component {
   render (){
@@ -21,8 +21,11 @@ class App extends Component {
               />
               <Route path="/clock" component={Clock}/>
               <Route path="/contact" component={Contact}/>
+              <Route path= "/Jeopardy" component={Jeopardy}/>
               <Route path="/welcome/:name" component={Welcome}/>
-              <Route component = {fourOneFour}/>              
+              
+              <Route component = {fourOneFour}/> 
+                       
           </Switch>
       </div>
     );

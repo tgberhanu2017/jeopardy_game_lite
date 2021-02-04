@@ -14,6 +14,10 @@ function Navigation (props){
                 <li>
                     <Link to = "/contact"> Contact </Link>
                 </li>
+                <li>
+                    <Link to = "/Jeopardy"> Jeopardy </Link>
+                </li>
+                
             </ul>
 
 
